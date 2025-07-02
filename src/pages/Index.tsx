@@ -5,6 +5,7 @@ import { ContentGenerator } from '@/components/ContentGenerator';
 import { ContentCalendar } from '@/components/ContentCalendar';
 import { ContentLibrary } from '@/components/ContentLibrary';
 import { Dashboard } from '@/components/Dashboard';
+import { VideoGenerator } from '@/components/VideoGenerator';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -23,33 +24,49 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       
-      <main className="container mx-auto px-4 py-8">
-        {activeTab === 'dashboard' && (
-          <Dashboard 
-            generatedContent={generatedContent}
-            scheduledContent={scheduledContent}
-            setActiveTab={setActiveTab}
-          />
-        )}
-        
-        {activeTab === 'generate' && (
-          <ContentGenerator onContentGenerated={handleContentGenerated} />
-        )}
-        
-        {activeTab === 'calendar' && (
-          <ContentCalendar 
-            scheduledContent={scheduledContent}
-            availableContent={generatedContent}
-            onScheduleContent={handleScheduleContent}
-          />
-        )}
-        
-        {activeTab === 'library' && (
-          <ContentLibrary 
-            content={generatedContent}
-            onScheduleContent={handleScheduleContent}
-          />
-        )}
+      <main className="container mx-auto px-4 py-8 transform transition-all duration-500">
+        <div className="animate-fade-in">
+          {activeTab === 'dashboard' && (
+            <div className="transform transition-all duration-500 hover:scale-[1.005]">
+              <Dashboard 
+                generatedContent={generatedContent}
+                scheduledContent={scheduledContent}
+                setActiveTab={setActiveTab}
+              />
+            </div>
+          )}
+          
+          {activeTab === 'generate' && (
+            <div className="transform transition-all duration-500 hover:scale-[1.005]">
+              <ContentGenerator onContentGenerated={handleContentGenerated} />
+            </div>
+          )}
+          
+          {activeTab === 'calendar' && (
+            <div className="transform transition-all duration-500 hover:scale-[1.005]">
+              <ContentCalendar 
+                scheduledContent={scheduledContent}
+                availableContent={generatedContent}
+                onScheduleContent={handleScheduleContent}
+              />
+            </div>
+          )}
+          
+          {activeTab === 'library' && (
+            <div className="transform transition-all duration-500 hover:scale-[1.005]">
+              <ContentLibrary 
+                content={generatedContent}
+                onScheduleContent={handleScheduleContent}
+              />
+            </div>
+          )}
+
+          {activeTab === 'videos' && (
+            <div className="transform transition-all duration-500 hover:scale-[1.005]">
+              <VideoGenerator />
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );

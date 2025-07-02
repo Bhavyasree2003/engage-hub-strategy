@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Sparkles, Twitter, Linkedin, Instagram, Loader2 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Sparkles, Twitter, Linkedin, Instagram, Loader2, Eye, Copy, Calendar } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 interface ContentGeneratorProps {
@@ -16,6 +16,7 @@ interface ContentGeneratorProps {
 
 export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedContent, setGeneratedContent] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     businessType: '',
     targetAudience: '',
@@ -132,11 +133,12 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      const generatedContent = generateMockContent();
-      onContentGenerated(generatedContent);
+      const newContent = generateMockContent();
+      setGeneratedContent(newContent);
+      onContentGenerated(newContent);
       
       toast({
-        title: `Generated ${generatedContent.length} content ideas!`,
+        title: `Generated ${newContent.length} content ideas!`,
         description: "Your AI-powered content is ready for review and scheduling."
       });
     } catch (error) {
@@ -150,10 +152,47 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
     }
   };
 
+  const getPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case 'twitter': return Twitter;
+      case 'linkedin': return Linkedin;
+      case 'instagram': return Instagram;
+      default: return Sparkles;
+    }
+  };
+
+  const getPlatformColor = (platform: string) => {
+    switch (platform) {
+      case 'twitter': return 'from-blue-500 to-blue-600';
+      case 'linkedin': return 'from-blue-700 to-blue-800';
+      case 'instagram': return 'from-pink-500 to-purple-600';
+      default: return 'from-gray-500 to-gray-600';
+    }
+  };
+
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case 'educational': return 'bg-green-100 text-green-800';
+      case 'promotional': return 'bg-orange-100 text-orange-800';
+      case 'interactive': return 'bg-purple-100 text-purple-800';
+      case 'behind-the-scenes': return 'bg-blue-100 text-blue-800';
+      case 'user-generated': return 'bg-pink-100 text-pink-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const handleCopyContent = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Content copied to clipboard!",
+      description: "You can now paste it anywhere."
+    });
+  };
+
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8">
       <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent transform hover:scale-105 transition-all duration-300">
           AI Content Generator
         </h1>
         <p className="text-gray-600">
@@ -162,14 +201,14 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="border-0 shadow-lg">
-          <CardHeader>
+        <Card className="border-0 shadow-lg transform hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50">
             <CardTitle className="flex items-center space-x-2">
               <Sparkles className="w-5 h-5 text-blue-600" />
               <span>Business Information</span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 p-6">
             <div className="space-y-2">
               <Label htmlFor="business-type">Business Type</Label>
               <Input
@@ -177,6 +216,7 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
                 placeholder="e.g., SaaS, E-commerce, Consulting"
                 value={formData.businessType}
                 onChange={(e) => setFormData(prev => ({ ...prev, businessType: e.target.value }))}
+                className="transform focus:scale-[1.02] transition-all duration-200"
               />
             </div>
 
@@ -187,6 +227,7 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
                 placeholder="e.g., Technology, Healthcare, Finance"
                 value={formData.industry}
                 onChange={(e) => setFormData(prev => ({ ...prev, industry: e.target.value }))}
+                className="transform focus:scale-[1.02] transition-all duration-200"
               />
             </div>
 
@@ -198,6 +239,7 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
                 value={formData.targetAudience}
                 onChange={(e) => setFormData(prev => ({ ...prev, targetAudience: e.target.value }))}
                 rows={3}
+                className="transform focus:scale-[1.02] transition-all duration-200"
               />
             </div>
 
@@ -209,6 +251,7 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
                 value={formData.contentGoals}
                 onChange={(e) => setFormData(prev => ({ ...prev, contentGoals: e.target.value }))}
                 rows={3}
+                className="transform focus:scale-[1.02] transition-all duration-200"
               />
             </div>
 
@@ -219,13 +262,14 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
                 placeholder="Enter relevant keywords separated by commas"
                 value={formData.keywords}
                 onChange={(e) => setFormData(prev => ({ ...prev, keywords: e.target.value }))}
+                className="transform focus:scale-[1.02] transition-all duration-200"
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="brand-voice">Brand Voice</Label>
               <Select value={formData.brandVoice} onValueChange={(value) => setFormData(prev => ({ ...prev, brandVoice: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="transform focus:scale-[1.02] transition-all duration-200">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -240,20 +284,20 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-lg">
-          <CardHeader>
+        <Card className="border-0 shadow-lg transform hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl">
+          <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50">
             <CardTitle className="flex items-center space-x-2">
               <Twitter className="w-5 h-5 text-blue-500" />
               <span>Platform & Content Settings</span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 p-6">
             <div className="space-y-4">
               <Label>Target Platforms</Label>
               {platforms.map(platform => {
                 const Icon = platform.icon;
                 return (
-                  <div key={platform.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <div key={platform.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg transform hover:scale-[1.02] hover:bg-gray-100 transition-all duration-200">
                     <Checkbox
                       id={platform.id}
                       checked={formData.platforms.includes(platform.id)}
@@ -274,7 +318,7 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
             <div className="space-y-4">
               <Label>Content Types</Label>
               {contentTypes.map(type => (
-                <div key={type.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                <div key={type.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg transform hover:scale-[1.02] hover:bg-gray-100 transition-all duration-200">
                   <Checkbox
                     id={type.id}
                     checked={formData.contentTypes.includes(type.id)}
@@ -293,7 +337,7 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
             <Button 
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-12 text-lg shadow-lg hover:shadow-xl transition-all duration-200"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-12 text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200"
             >
               {isGenerating ? (
                 <>
@@ -310,6 +354,79 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
           </CardContent>
         </Card>
       </div>
+
+      {/* Generated Content Display */}
+      {generatedContent.length > 0 && (
+        <Card className="border-0 shadow-lg transform hover:scale-[1.01] transition-all duration-300">
+          <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50">
+            <CardTitle className="flex items-center space-x-2">
+              <Eye className="w-5 h-5 text-green-600" />
+              <span>Generated Content Ideas ({generatedContent.length})</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {generatedContent.map((item, index) => {
+                const PlatformIcon = getPlatformIcon(item.platform);
+                return (
+                  <Card 
+                    key={item.id} 
+                    className="border-2 border-gray-100 hover:border-blue-200 transform hover:scale-[1.02] hover:shadow-lg transition-all duration-300 hover:rotate-1"
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      animation: 'fade-in 0.5s ease-out forwards'
+                    }}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <div className={`p-2 rounded-lg bg-gradient-to-r ${getPlatformColor(item.platform)} transform hover:scale-110 transition-all duration-200`}>
+                            <PlatformIcon className="w-4 h-4 text-white" />
+                          </div>
+                          <span className="font-medium capitalize">{item.platform}</span>
+                        </div>
+                        <Badge className={`${getTypeColor(item.type)} transform hover:scale-105 transition-all duration-200`}>
+                          {item.type}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm text-gray-700 line-clamp-4">
+                        {item.text}
+                      </p>
+                      
+                      <div className="flex items-center justify-between text-xs text-gray-500">
+                        <span>Engagement: {item.engagement}%</span>
+                        <span>{new Date(item.createdAt).toLocaleDateString()}</span>
+                      </div>
+
+                      <div className="flex items-center justify-center space-x-2 pt-2 border-t">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleCopyContent(item.text)}
+                          className="h-8 px-3 transform hover:scale-110 transition-all duration-200"
+                        >
+                          <Copy className="w-4 h-4 mr-1" />
+                          Copy
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-8 px-3 transform hover:scale-110 transition-all duration-200"
+                        >
+                          <Calendar className="w-4 h-4 mr-1" />
+                          Schedule
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
