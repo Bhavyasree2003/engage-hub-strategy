@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -111,6 +112,9 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
   };
 
   const handleGenerate = async () => {
+    console.log('Generate button clicked');
+    console.log('Form data:', formData);
+    
     if (formData.platforms.length === 0) {
       toast({
         title: "Please select at least one platform",
@@ -134,6 +138,8 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       const newContent = generateMockContent();
+      console.log('Generated content:', newContent);
+      
       setGeneratedContent(newContent);
       onContentGenerated(newContent);
       
@@ -142,6 +148,7 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
         description: "Your AI-powered content is ready for review and scheduling."
       });
     } catch (error) {
+      console.error('Generation error:', error);
       toast({
         title: "Generation failed",
         description: "Please try again or contact support.",
@@ -188,6 +195,8 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
       description: "You can now paste it anywhere."
     });
   };
+
+  console.log('Current generated content state:', generatedContent);
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -371,10 +380,9 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
                 return (
                   <Card 
                     key={item.id} 
-                    className="border-2 border-gray-100 hover:border-blue-200 transform hover:scale-[1.02] hover:shadow-lg transition-all duration-300 hover:rotate-1"
+                    className="border-2 border-gray-100 hover:border-blue-200 transform hover:scale-[1.02] hover:shadow-lg transition-all duration-300"
                     style={{
                       animationDelay: `${index * 100}ms`,
-                      animation: 'fade-in 0.5s ease-out forwards'
                     }}
                   >
                     <CardHeader className="pb-3">
@@ -426,6 +434,17 @@ export const ContentGenerator = ({ onContentGenerated }: ContentGeneratorProps) 
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Debug section - remove in production */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-gray-100 p-4 rounded-lg">
+          <h3 className="font-bold mb-2">Debug Info:</h3>
+          <p>Generated content length: {generatedContent.length}</p>
+          <p>Is generating: {isGenerating.toString()}</p>
+          <p>Selected platforms: {formData.platforms.join(', ')}</p>
+          <p>Selected content types: {formData.contentTypes.join(', ')}</p>
+        </div>
       )}
     </div>
   );
