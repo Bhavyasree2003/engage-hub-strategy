@@ -23,7 +23,9 @@ An AI-powered tool that generates, organizes, and schedules cross-platform marke
 | **5. Diverse Content Suggestions**  | Recommends content types (educational, promo, Q&A, etc.) |
 | **6. Export to CSV/PDF**            | Download content calendar and ideas |
 | **7. Feedback Loop**                | Rate/flag ideas to improve future suggestions |
-
+ ---
+ ## Demo 
+ https://engage-hub-strategy-git-main-bhavyasree2003s-projects.vercel.app/
 ---
 
 ## ✨ Bonus Features (If Implemented)
