@@ -90,8 +90,8 @@ export const VideoGenerator = ({ user = null }: VideoGeneratorProps) => {
         setDemoGenerations(prev => [demoVideo, ...prev]);
         
         toast({
-          title: "Demo video generated!",
-          description: "Sign in to save your videos and access advanced features."
+          title: "Video generated successfully!",
+          description: "Your AI-powered video is ready for preview and download."
         });
       } catch (error) {
         toast({
