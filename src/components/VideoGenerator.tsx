@@ -11,8 +11,11 @@ import { toast } from '@/hooks/use-toast';
 import { useVideoGeneration } from '@/hooks/useVideoGeneration';
 import type { User } from '@supabase/supabase-js';
 
-export const VideoGenerator = () => {
-  const [user, setUser] = useState<User | null>(null);
+interface VideoGeneratorProps {
+  user?: User | null;
+}
+
+export const VideoGenerator = ({ user = null }: VideoGeneratorProps) => {
   const [videoConfig, setVideoConfig] = useState({
     prompt: '',
     style: 'professional',

@@ -6,11 +6,14 @@ import { ContentCalendar } from '@/components/ContentCalendar';
 import { ContentLibrary } from '@/components/ContentLibrary';
 import { Dashboard } from '@/components/Dashboard';
 import { VideoGenerator } from '@/components/VideoGenerator';
+import { Auth } from '@/components/Auth';
+import type { User } from '@supabase/supabase-js';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [generatedContent, setGeneratedContent] = useState([]);
   const [scheduledContent, setScheduledContent] = useState([]);
+  const [user, setUser] = useState<User | null>(null);
 
   const handleContentGenerated = (content) => {
     setGeneratedContent(prev => [...prev, ...content]);
@@ -18,6 +21,10 @@ const Index = () => {
 
   const handleScheduleContent = (content, date) => {
     setScheduledContent(prev => [...prev, { ...content, scheduledDate: date, id: Date.now() }]);
+  };
+
+  const handleAuthChange = (user: User | null) => {
+    setUser(user);
   };
 
   return (
@@ -63,7 +70,8 @@ const Index = () => {
 
           {activeTab === 'videos' && (
             <div className="transform transition-all duration-500 hover:scale-[1.005]">
-              <VideoGenerator />
+              <Auth onAuthChange={handleAuthChange} />
+              <VideoGenerator user={user} />
             </div>
           )}
         </div>
