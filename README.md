@@ -1,73 +1,48 @@
-# Welcome to your Lovable project
+# 📣 DevifyX – AI Marketing Content Strategist
 
-## Project info
+An AI-powered tool that generates, organizes, and schedules cross-platform marketing content ideas using Large Language Models (LLMs) to help marketing teams run smarter, faster campaigns.
 
-**URL**: https://lovable.dev/projects/e0cf56df-ffd2-4425-8655-c4cff0d7429e
+---
 
-## How can I edit this code?
+## 🚀 Overview
 
-There are several ways of editing your application.
+- **Assignment:** DevifyX AI Marketing Content Strategist
+- **Objective:** Streamline content ideation and scheduling for Twitter, Instagram, LinkedIn using LLMs
 
-**Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e0cf56df-ffd2-4425-8655-c4cff0d7429e) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## ✅ Core Features
 
-**Use your preferred IDE**
+| Feature                             | Description |
+|-------------------------------------|-------------|
+| **1. Cross-Platform Generation**    | Generate content ideas tailored to Twitter, LinkedIn, Instagram |
+| **2. Content Calendar**             | Assign ideas to a visual date/time calendar |
+| **3. Audience Persona Input**       | Customize ideas based on target demographics |
+| **4. Trending Topics Integration**  | Pull real-time trending hashtags/topics |
+| **5. Diverse Content Suggestions**  | Recommends content types (educational, promo, Q&A, etc.) |
+| **6. Export to CSV/PDF**            | Download content calendar and ideas |
+| **7. Feedback Loop**                | Rate/flag ideas to improve future suggestions |
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## ✨ Bonus Features (If Implemented)
 
-Follow these steps:
+- 🔗 One-click post scheduling via platform APIs (Twitter, LinkedIn, etc.)
+- 📊 Engagement prediction dashboard
+- 🌍 Multi-language content generation
+- 👥 Team collaboration (invite/comment system)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🧱 Tech Stack
 
-# Step 3: Install the necessary dependencies.
-npm i
+| Layer          | Tech Used |
+|----------------|-----------|
+| **Frontend**   | React (w/ Tailwind or Material UI) |
+| **Backend**    | Node.js (Express) or Python (FastAPI/Flask) |
+| **LLM**        | OpenAI GPT-4 (or LLaMA 2, etc.) |
+| **Database**   | MongoDB / PostgreSQL |
+| **Scheduling** | Node Scheduler / FullCalendar |
+| **Exporting**  | PDFKit / csv-writer libraries |
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/e0cf56df-ffd2-4425-8655-c4cff0d7429e) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
